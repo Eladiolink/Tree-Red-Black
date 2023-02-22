@@ -1,0 +1,18 @@
+
+
+
+search(T,valor)
+    x = T.raiz
+    
+    enquanto(x!= NULL){
+        se(x.valor == valor)
+            return x
+
+        se (valor < x.valor)
+            x = x.esquerda
+        senão
+            x = x.direita
+
+    }
+
+
