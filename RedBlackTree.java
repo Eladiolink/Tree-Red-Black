@@ -1,4 +1,3 @@
-
 // Implementing Red-Black Tree in Java
 
 class Node {
@@ -127,6 +126,7 @@ public class RedBlackTree {
   private void deleteNodeHelper(Node node, int key) {
     Node z = TNULL;
     Node x, y;
+
     while (node != TNULL) {
       if (node.data == key) {
         z = node;
@@ -138,7 +138,7 @@ public class RedBlackTree {
         node = node.left;
       }
     }
-
+   
     if (z == TNULL) {
       System.out.println("Couldn't find key in the tree");
       return;
@@ -153,22 +153,30 @@ public class RedBlackTree {
       x = z.left;
       rbTransplant(z, z.left);
     } else {
-      y = minimum(z.right);
+      y = maximum(z.left);
+     
+      //System.exit(0);
+
       yOriginalColor = y.color;
-      x = y.right;
+      x = y.left;
       if (y.parent == z) {
         x.parent = y;
       } else {
-        rbTransplant(y, y.right);
-        y.right = z.right;
-        y.right.parent = y;
+        rbTransplant(y, y.left);
+        y.left = z.left;
+        y.left.parent = y;
       }
-
+      
       rbTransplant(z, y);
-      y.left = z.left;
+
+      y.right = z.right;
       y.left.parent = y;
       y.color = z.color;
+      z.right.parent = y;
     }
+
+   // System.out.println(":"+z.right.parent.data);
+    
     if (yOriginalColor == 0) {
       fixDelete(x);
     }
@@ -393,17 +401,20 @@ public class RedBlackTree {
 
   public static void main(String[] args) {
     RedBlackTree bst = new RedBlackTree();
-    
     int inputs[] = {10, 6, 15, 3, 8, 13, 18, 1, 5, 7, 9, 12, 14, 16, 19, 2, 4, 11, 17, 20};
 
     for(int i=0;i<20;i++){
-      bst.insert(i);
+      bst.insert(inputs[i]);
     }
+
 
     bst.printTree();
 
     System.out.println("\nDepos da Deleção:");
-    bst.deleteNode(65);
+    bst.deleteNode(15);
+    bst.deleteNode(18);
+
     bst.printTree();
+
   }
 }
